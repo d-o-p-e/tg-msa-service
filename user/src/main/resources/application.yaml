@@ -1,0 +1,64 @@
+server:
+  port: 8081
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3307/tg_user
+    username: root
+    password: 1234
+    hikari:
+      auto-commit: false
+      connection-test-query: SELECT 1
+      minimum-idle: 10
+      maximum-pool-size: 20
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+      pool-name: pool-of-girls
+
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl.auto: create
+    open-in-view: false
+    show-sql: true
+
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: 1234
+
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+
+management:
+  endpoints:
+    prometheus:
+      enabled: true
+    web:
+      exposure:
+        include: prometheus
+
+oauth:
+  kakao:
+    client-id: 0
+    redirect-uri: 0
+    api_url:
+      token: 0
+      information: 0
+
+aws:
+  s3:
+    credentials:
+      access-key: test
+      secret-key: test
+    region:
+      static: test
+    bucket: test
+    directory:
+      image: test
+      profile: test
