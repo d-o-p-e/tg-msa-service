@@ -1,0 +1,13 @@
+HELP.md
+
+
+### IntelliJ IDEA ###
+/.idea
+
+### VS Code ###
+/.vscode/
+
+### OS ###
+.DS_Store
+
+/core/
