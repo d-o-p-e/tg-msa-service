@@ -29,8 +29,6 @@ dependencies {
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
-    implementation "com.querydsl:querydsl-jpa:5.0.0:jakarta"
-    annotationProcessor "com.querydsl:querydsl-apt:5.0.0:jakarta"
     annotationProcessor "jakarta.annotation:jakarta.annotation-api"
     annotationProcessor "jakarta.persistence:jakarta.persistence-api"
 
@@ -56,12 +54,4 @@ jib {
         ports = ["8081"]
         jvmFlags = ['-Dspring.profiles.active=prod', '-XX:+UseContainerSupport', '-Dserver.port=8081', '-Dfile.encoding=UTF-8']
     }
-}
-
-def querydslSrcDir = 'src/main/generated'
-clean {
-    delete file(querydslSrcDir)
-}
-tasks.withType(JavaCompile) {
-    options.generatedSourceOutputDirectory = file(querydslSrcDir)
 }

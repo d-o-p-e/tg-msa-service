@@ -43,14 +43,6 @@ management:
       exposure:
         include: prometheus
 
-oauth:
-  kakao:
-    client-id: 0
-    redirect-uri: 0
-    api_url:
-      token: 0
-      information: 0
-
 aws:
   s3:
     credentials:

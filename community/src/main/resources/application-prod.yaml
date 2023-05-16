@@ -39,14 +39,6 @@ management:
       exposure:
         include: prometheus
 
-oauth:
-  kakao:
-    client-id: ${KAKAO_CLIENT_ID}
-    redirect-uri: ${KAKAO_REDIRECT_URI}
-    api_url:
-      token: ${KAKAO_API_URL_TOKEN}
-      information: ${KAKAO_API_URL_INFORMATION}
-
 aws:
   s3:
     credentials:
