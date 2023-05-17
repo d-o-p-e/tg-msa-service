@@ -1,5 +1,6 @@
 package com.tg.user.user.domain;
 
+import com.tg.user.auth.domain.SessionUserVo;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
@@ -59,5 +60,13 @@ public class User implements Serializable {
         this.email = email;
         this.profileImageUrl = profileImageUrl;
         this.mileage = new Mileage();
+    }
+
+    public SessionUserVo toSessionUserVo() {
+        return SessionUserVo.builder()
+                .id(id)
+                .nickname(nickname)
+                .profileImageUrl(profileImageUrl)
+                .build();
     }
 }
