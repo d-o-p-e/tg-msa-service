@@ -62,3 +62,6 @@ aws:
     directory:
       image: test
       profile: test
+
+session:
+  expiration: 86400
