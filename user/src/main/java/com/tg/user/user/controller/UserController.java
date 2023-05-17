@@ -1,7 +1,6 @@
 package com.tg.user.user.controller;
 
 import com.tg.user.auth.UserContext;
-import com.tg.user.auth.domain.SessionUserVo;
 import com.tg.user.user.domain.UserService;
 import com.tg.user.user.domain.dto.UserInformationResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,5 +30,4 @@ public class UserController {
         }
         return ResponseEntity.ok().body(userService.getUserInformation(targetUserId));
     }
-
 }
