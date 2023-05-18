@@ -51,6 +51,11 @@ public class User implements Serializable {
     public User(String nickname, String email) {
         this.nickname = nickname;
         this.email = email;
-        this.mileage = new Mileage();
+        this.mileage = new Mileage(0);
+    }
+
+    public void withdraw() {
+        mileage.verifyAtLeastBalance();
+        this.mileage = new Mileage(this.mileage.inquiryAmounts() - 1);
     }
 }
