@@ -10,13 +10,6 @@ pipeline {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout the repository
-                git 'https://github.com/d-o-p-e/tg-msa-service.git'
-            }
-        }
-
         stage('Login & Configuration') {
             steps {
                 sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
