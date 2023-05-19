@@ -51,7 +51,7 @@ jib {
         tags = ['latest']
     }
     container {
-        ports = ["8081"]
+        ports = ["8080"]
         jvmFlags = ['-Dspring.profiles.active=prod', '-XX:+UseContainerSupport', '-Dserver.port=8081', '-Dfile.encoding=UTF-8']
     }
 }
