@@ -38,3 +38,18 @@ spec:
                 configMapKeyRef:
                   name: mailing-service-config
                   key: MAIL_PASSWORD
+            - name: KAFKA_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: KAFKA_HOST
+            - name: KAFKA_GROUP_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: KAFKA_GROUP_ID
+            - name: KAFKA_TOPIC
+              valueFrom:
+                configMapKeyRef:
+                  name: mailing-service-config
+                  key: KAFKA_TOPIC
