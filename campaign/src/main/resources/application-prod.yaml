@@ -26,6 +26,9 @@ spring:
       port: ${REDIS_PORT}
       password: ${REDIS_PASSWORD}
 
+  kafka:
+    host: ${KAFKA_HOST}
+
   servlet:
     multipart:
       max-file-size: 100MB
