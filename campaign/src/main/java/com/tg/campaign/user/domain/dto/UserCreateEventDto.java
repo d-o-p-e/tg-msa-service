@@ -14,14 +14,6 @@ public class UserCreateEventDto extends Event {
     private String email;
     private String profileImageUrl;
 
-    public UserCreateEventDto(Long userId, String nickname, String email, String profileImageUrl) {
-        super();
-        this.userId = userId;
-        this.nickname = nickname;
-        this.email = email;
-        this.profileImageUrl = profileImageUrl;
-    }
-
     public User toEntity() {
         return User.builder()
             .id(userId)
