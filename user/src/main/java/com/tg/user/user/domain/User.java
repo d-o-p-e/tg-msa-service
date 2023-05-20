@@ -73,4 +73,8 @@ public class User implements Serializable {
     public void deductMileage() {
         this.mileage = new Mileage(this.mileage.inquiryAmounts() - 1);
     }
+
+    public void addMileage() {
+        this.mileage = new Mileage(this.mileage.inquiryAmounts() + 1);
+    }
 }

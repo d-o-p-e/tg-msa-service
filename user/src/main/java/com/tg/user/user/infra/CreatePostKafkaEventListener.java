@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class EntryCampaignKafkaEventListener {
+public class CreatePostKafkaEventListener {
 
     private final UserRepository userRepository;
 
-    @KafkaListener(topics = "campaign-entry", groupId = "user-consumer-0", containerFactory = "entryCampaignMessageListener")
+    @KafkaListener(topics = "campaign-entry", groupId = "user-consumer-0", containerFactory = "createPostMessageListener")
     public void userCreateEventListener(EntryCampaignEventDto entryCampaignEventDto){
         User user = userRepository.findById(entryCampaignEventDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
-        user.deductMileage();
+        user.addMileage();
     }
 }
