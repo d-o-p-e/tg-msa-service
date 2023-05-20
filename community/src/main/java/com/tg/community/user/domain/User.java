@@ -29,7 +29,8 @@ public class User implements Serializable {
     }
 
     @Builder
-    public User(String nickname, String profileImageUrl) {
+    public User(Long id, String nickname, String profileImageUrl) {
+        this.id = id;
         this.nickname = nickname;
         this.profileImageUrl = profileImageUrl;
     }

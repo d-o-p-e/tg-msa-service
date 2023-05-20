@@ -8,5 +8,5 @@ import java.util.List;
 public interface CampaignService {
     List<CampaignResponseDto> getCampaign();
 
-    ResponseEntity<Void> drawCampaign(Long userId, Long campaignId);
+    ResponseEntity<Void> enterCampaign(Long userId, Long campaignId);
 }

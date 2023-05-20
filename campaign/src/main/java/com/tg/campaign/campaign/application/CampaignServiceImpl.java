@@ -29,7 +29,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Transactional
-    public ResponseEntity<Void> drawCampaign(Long userId, Long campaignId) {
+    public ResponseEntity<Void> enterCampaign(Long userId, Long campaignId) {
         User user = userRepository.getReferenceById(userId);
         Campaign campaign = campaignRepository.findById(campaignId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 캠페인입니다."));
