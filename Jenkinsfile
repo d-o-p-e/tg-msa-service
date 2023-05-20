@@ -26,6 +26,7 @@ pipeline {
                         if (changedFiles.any { it.startsWith("campaign") }) {
                             dir('campaign') {
                                 try {
+                                    sh './gradlew jib'
                                     sh '../kubectl apply -f k8s.yaml'
                                     sh "../kubectl rollout restart deployment/tg-campaign -n campaign"
                                     slackSend message: "Campaign Service Deployed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
@@ -38,6 +39,7 @@ pipeline {
                         if (changedFiles.any { it.startsWith("community") }) {
                             dir('community') {
                                 try {
+                                    sh './gradlew jib'
                                     sh '../kubectl apply -f k8s.yaml'
                                     sh "../kubectl rollout restart deployment/tg-community -n community"
                                     slackSend message: "Community Service Deployed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
@@ -50,12 +52,23 @@ pipeline {
                         if (changedFiles.any { it.startsWith("user") }) {
                             dir('user') {
                                 try {
+                                    sh './gradlew jib'
                                     sh '../kubectl apply -f k8s.yaml'
                                     sh "../kubectl rollout restart deployment/tg-user -n user"
                                     slackSend message: "User Service Deployed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
                                 }
                                 catch (err) {
                                     slackSend message: "User Service Failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+                                }
+                            }
+                        }
+                        if (changedFiles.any { it.startsWith("mailing") }) {
+                            dir('mailing') {
+                                try {
+                                    sh 'docker build -t dopeteam/tg-mailing:latest .'
+                                    sh 'docker push dopeteam/tg-mailing:latest'
+                                    sh '../kubectl apply -f k8s.yaml'
+                                    sh "../kubectl rollout restart deployment/tg-mailing -n mailing"
                                 }
                             }
                         }

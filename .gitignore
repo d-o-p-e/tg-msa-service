@@ -11,3 +11,7 @@ HELP.md
 .DS_Store
 
 /core/
+
+
+.venv/
+__pycache__/
