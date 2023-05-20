@@ -69,6 +69,10 @@ pipeline {
                                     sh 'docker push dopeteam/tg-mailing:latest'
                                     sh '../kubectl apply -f k8s.yaml'
                                     sh "../kubectl rollout restart deployment/tg-mailing -n mailing"
+                                    slackSend message: "Mailing Service Deployed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
+                                }
+                                catch (err) {
+                                    slackSend message: "Mailing Service Failed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
                                 }
                             }
                         }
