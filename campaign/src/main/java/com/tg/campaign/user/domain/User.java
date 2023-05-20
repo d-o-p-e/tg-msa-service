@@ -55,7 +55,7 @@ public class User implements Serializable {
         this.mileage = new Mileage(0);
     }
 
-    public void withdraw() {
+    public void deductMileage() {
         mileage.verifyAtLeastBalance();
         this.mileage = new Mileage(this.mileage.inquiryAmounts() - 1);
     }
