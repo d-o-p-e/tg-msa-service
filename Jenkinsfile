@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        jdk '17.0.7'
-    }
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
@@ -26,10 +23,12 @@ pipeline {
                         if (changedFiles.any { it.startsWith("campaign") }) {
                             dir('campaign') {
                                 try {
-                                    sh './gradlew clean'
-                                    sh './gradlew jib'
-                                    sh '../kubectl apply -f k8s.yaml'
-                                    sh "../kubectl rollout restart deployment/tg-campaign -n campaign"
+                                    withGradle {
+                                        sh './gradlew clean'
+                                        sh './gradlew jib'
+                                        sh '../kubectl apply -f k8s.yaml'
+                                        sh "../kubectl rollout restart deployment/tg-campaign -n campaign"
+                                    }
                                     slackSend message: "Campaign Service Deployed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
                                 }
                                 catch (err) {
@@ -40,10 +39,12 @@ pipeline {
                         if (changedFiles.any { it.startsWith("community") }) {
                             dir('community') {
                                 try {
-                                    sh './gradlew clean'
-                                    sh './gradlew jib'
-                                    sh '../kubectl apply -f k8s.yaml'
-                                    sh "../kubectl rollout restart deployment/tg-community -n community"
+                                    withGradle {
+                                        sh './gradlew clean'
+                                        sh './gradlew jib'
+                                        sh '../kubectl apply -f k8s.yaml'
+                                        sh "../kubectl rollout restart deployment/tg-community -n community"
+                                    }
                                     slackSend message: "Community Service Deployed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
                                 }
                                 catch (err) {
@@ -54,10 +55,12 @@ pipeline {
                         if (changedFiles.any { it.startsWith("user") }) {
                             dir('user') {
                                 try {
-                                    sh './gradlew clean'
-                                    sh './gradlew jib'
-                                    sh '../kubectl apply -f k8s.yaml'
-                                    sh "../kubectl rollout restart deployment/tg-user -n user"
+                                    withGradle {
+                                        sh './gradlew clean'
+                                        sh './gradlew jib'
+                                        sh '../kubectl apply -f k8s.yaml'
+                                        sh "../kubectl rollout restart deployment/tg-user -n user"
+                                    }
                                     slackSend message: "User Service Deployed - ${env.JOB_NAME} ${env.BUILD_NUMBER} (<${env.BUILD_URL}|Open>)"
                                 }
                                 catch (err) {
