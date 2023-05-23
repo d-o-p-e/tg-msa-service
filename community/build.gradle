@@ -50,7 +50,7 @@ jib {
 		image = 'amazoncorretto:17.0.7'
 	}
 	to {
-		image = 'dopeteam/tg-user'
+		image = 'dopeteam/tg-community'
 		tags = ['latest']
 	}
 	container {

@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        jdk 'jdk-17'
+        jdk '17.0.7'
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -26,6 +26,7 @@ pipeline {
                         if (changedFiles.any { it.startsWith("campaign") }) {
                             dir('campaign') {
                                 try {
+                                    sh './gradlew clean'
                                     sh './gradlew jib'
                                     sh '../kubectl apply -f k8s.yaml'
                                     sh "../kubectl rollout restart deployment/tg-campaign -n campaign"
@@ -39,6 +40,7 @@ pipeline {
                         if (changedFiles.any { it.startsWith("community") }) {
                             dir('community') {
                                 try {
+                                    sh './gradlew clean'
                                     sh './gradlew jib'
                                     sh '../kubectl apply -f k8s.yaml'
                                     sh "../kubectl rollout restart deployment/tg-community -n community"
@@ -52,6 +54,7 @@ pipeline {
                         if (changedFiles.any { it.startsWith("user") }) {
                             dir('user') {
                                 try {
+                                    sh './gradlew clean'
                                     sh './gradlew jib'
                                     sh '../kubectl apply -f k8s.yaml'
                                     sh "../kubectl rollout restart deployment/tg-user -n user"
