@@ -7,8 +7,10 @@ import com.tg.community.post.domain.PostLike;
 import com.tg.community.post.domain.PostLikeRepository;
 import com.tg.community.post.domain.PostRepository;
 import com.tg.community.post.domain.PostService;
+import com.tg.community.post.domain.dto.CreatePostEventDto;
 import com.tg.community.post.domain.dto.CreatePostRequestDto;
 import com.tg.community.post.domain.dto.FeedResponseDto;
+import com.tg.community.post.infra.PostCreateKafkaProducerEvent;
 import com.tg.community.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +28,7 @@ public class PostServiceImpl implements PostService {
 
     private final MediaService mediaService;
     private final PostRepository postRepository;
+    private final PostCreateKafkaProducerEvent postCreateKafkaProducerEvent;
 
     @Value("${aws.s3.directory.image}")
     private String s3ImageDirectory;
@@ -44,6 +47,7 @@ public class PostServiceImpl implements PostService {
                     .imageUrl(fileName)
                     .build()
         );
+        postCreateKafkaProducerEvent.sendMessage(new CreatePostEventDto(userId));
     }
 
     @Transactional(readOnly = true)

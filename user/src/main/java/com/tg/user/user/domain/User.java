@@ -59,7 +59,7 @@ public class User implements Serializable {
         this.nickname = nickname;
         this.email = email;
         this.profileImageUrl = profileImageUrl;
-        this.mileage = new Mileage();
+        this.mileage = new Mileage(0);
     }
 
     public SessionUserVo toSessionUserVo() {
@@ -68,5 +68,13 @@ public class User implements Serializable {
                 .nickname(nickname)
                 .profileImageUrl(profileImageUrl)
                 .build();
+    }
+
+    public void deductMileage() {
+        this.mileage = new Mileage(this.mileage.inquiryAmounts() - 1);
+    }
+
+    public void addMileage() {
+        this.mileage = new Mileage(this.mileage.inquiryAmounts() + 1);
     }
 }

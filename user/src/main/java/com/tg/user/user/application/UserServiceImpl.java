@@ -5,7 +5,9 @@ import com.tg.user.user.domain.User;
 import com.tg.user.user.domain.UserRepository;
 import com.tg.user.user.domain.UserService;
 import com.tg.user.user.domain.dto.KakaoUserInformation;
+import com.tg.user.user.domain.dto.UserCreateEventDto;
 import com.tg.user.user.domain.dto.UserInformationResponseDto;
+import com.tg.user.user.infra.UserCreateKafkaProducerEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final OAuthService oAuthService;
+    private final UserCreateKafkaProducerEvent userCreateKafkaProducerEvent;
 
     @Override
     public Long login(String code) {
@@ -31,9 +34,16 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public User getOrCreateUser(KakaoUserInformation kakaoUserInformation) {
         Optional<User> optionalUser = userRepository.findByProviderId(kakaoUserInformation.getProviderId());
-        return optionalUser.orElseGet(() -> userRepository.save(User.builder()
+        if (optionalUser.isPresent()) {
+            return optionalUser.get();
+        }
+
+        User user = userRepository.save(User.builder()
                 .providerId(kakaoUserInformation.getProviderId())
-                .build()));
+                .build());
+        //TODO mapper 객체로 변환: Mapstruct
+        userCreateKafkaProducerEvent.sendMessage(new UserCreateEventDto(user));
+        return user;
     }
 
     @Override

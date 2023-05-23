@@ -5,6 +5,8 @@ import com.tg.campaign.campaign.domain.CampaignEntrant;
 import com.tg.campaign.campaign.domain.CampaignEntrantRepository;
 import com.tg.campaign.campaign.domain.CampaignRepository;
 import com.tg.campaign.campaign.domain.CampaignService;
+import com.tg.campaign.campaign.domain.dto.EntryCampaignEventDto;
+import com.tg.campaign.campaign.domain.EntryCampaignProducerEvent;
 import com.tg.campaign.campaign.domain.dto.CampaignResponseDto;
 import com.tg.campaign.user.domain.User;
 import com.tg.campaign.user.domain.UserRepository;
@@ -22,6 +24,7 @@ public class CampaignServiceImpl implements CampaignService {
     private final UserRepository userRepository;
     private final CampaignRepository campaignRepository;
     private final CampaignEntrantRepository campaignEntrantRepository;
+    private final EntryCampaignProducerEvent entryCampaignProducerEvent;
 
     public List<CampaignResponseDto> getCampaign() {
         List<Campaign> campaignList = campaignRepository.findAll();
@@ -29,12 +32,13 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Transactional
-    public ResponseEntity<Void> drawCampaign(Long userId, Long campaignId) {
+    public ResponseEntity<Void> enterCampaign(Long userId, Long campaignId) {
         User user = userRepository.getReferenceById(userId);
+        user.deductMileage();
         Campaign campaign = campaignRepository.findById(campaignId)
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 캠페인입니다."));
-        user.withdraw();
         campaignEntrantRepository.save(new CampaignEntrant(campaign, user));
+        entryCampaignProducerEvent.sendMessage(new EntryCampaignEventDto(user));
         return ResponseEntity.ok().build();
     }
 }

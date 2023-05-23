@@ -30,6 +30,9 @@ spring:
       port: 6379
       password: 1234
 
+  kafka:
+    host: localhost:9092
+
   servlet:
     multipart:
       max-file-size: 100MB

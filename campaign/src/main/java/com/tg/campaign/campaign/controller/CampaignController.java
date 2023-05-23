@@ -34,8 +34,8 @@ public class CampaignController {
     @Operation(summary = "캠페인 응모", description = "캠페인에 응모합니다.")
     @Auth
     @PostMapping("/{campaignId}")
-    public ResponseEntity<Void> drawCampaign(@PathVariable Long campaignId) {
+    public ResponseEntity<Void> enterCampaign(@PathVariable Long campaignId) {
         SessionUserVo sessionUserVo = UserContext.getContext();
-        return campaignService.drawCampaign(sessionUserVo.getId(), campaignId);
+        return campaignService.enterCampaign(sessionUserVo.getId(), campaignId);
     }
 }
