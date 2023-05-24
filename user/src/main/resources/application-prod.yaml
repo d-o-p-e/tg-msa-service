@@ -71,4 +71,4 @@ server:
         path: /
 
 session:
-  expiration: 86400
+  expiration: 86400000
