@@ -44,4 +44,4 @@ management:
 
 server:
   servlet:
-    contextPath: /api
+    contextPath: /api/campaign

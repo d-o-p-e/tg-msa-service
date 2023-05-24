@@ -64,7 +64,7 @@ aws:
 
 server:
   servlet:
-    contextPath: /api
+    contextPath: /api/user
 
 session:
   expiration: 86400

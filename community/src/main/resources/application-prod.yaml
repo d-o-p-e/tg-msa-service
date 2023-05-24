@@ -56,4 +56,4 @@ aws:
 
 server:
   servlet:
-    contextPath: /api
+    contextPath: /api/community
