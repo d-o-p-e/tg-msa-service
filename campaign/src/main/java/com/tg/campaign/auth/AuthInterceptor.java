@@ -4,6 +4,7 @@ import com.tg.campaign.auth.domain.AuthService;
 import com.tg.campaign.auth.domain.SessionUserVo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
@@ -22,15 +23,22 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (ResourceHttpRequestHandler.class.isAssignableFrom(handler.getClass())) {
             return true; // spring docs를 위한 처리
         }
-        SessionUserVo sessionUserVo = authService.getSession(request.getSession().getId());
-        UserContext.CONTEXT.set(sessionUserVo);
-
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
-        if (auth != null && sessionUserVo == null) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value(), "로그인이 필요합니다.");
-            return false;
+
+        HttpSession session = request.getSession();
+        if (session == null) {
+            if (auth != null) {
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "로그인이 필요합니다.");
+                return false;
+            } else {
+                UserContext.CONTEXT.set(null);
+                return true;
+            }
         }
+
+        SessionUserVo sessionUserVo = authService.getSession(session.getId());
+        UserContext.CONTEXT.set(sessionUserVo);
         return true;
     }
 
