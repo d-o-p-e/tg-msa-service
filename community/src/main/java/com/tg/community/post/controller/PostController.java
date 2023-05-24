@@ -47,7 +47,7 @@ public class PostController {
 
     @Operation(summary = "게시물 등록", description = "새로운 게시글을 작성합니다.")
     @Auth
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Void> createPost(CreatePostRequestDto createPostRequestDto) {
         SessionUserVo sessionUserVo = UserContext.getContext();
         postService.create(sessionUserVo.getId(), createPostRequestDto);
