@@ -67,7 +67,7 @@ server:
     contextPath: /api/user
     session:
       cookie:
-        same-site: "none"
+        same-site: "lax"
 
 session:
   expiration: 86400
