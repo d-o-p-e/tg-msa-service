@@ -37,8 +37,12 @@ public class PostController {
             @RequestParam(required = false) Long targetUserId
     ) {
         SessionUserVo sessionUserVo = UserContext.getContext();
+        Long userId = null;
+        if(sessionUserVo != null) {
+            userId = sessionUserVo.getId();
+        }
         FeedOption feedOption = new FeedOption(size, lastPostId, targetUserId);
-        return ResponseEntity.ok().body(postService.getFeed(sessionUserVo.getId(), feedOption));
+        return ResponseEntity.ok().body(postService.getFeed(userId, feedOption));
     }
 
     @Operation(summary = "게시물 등록", description = "새로운 게시글을 작성합니다.")
