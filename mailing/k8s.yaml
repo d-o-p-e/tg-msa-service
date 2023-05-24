@@ -48,8 +48,3 @@ spec:
                 configMapKeyRef:
                   name: mailing-service-config
                   key: KAFKA_GROUP_ID
-            - name: KAFKA_TOPIC
-              valueFrom:
-                configMapKeyRef:
-                  name: mailing-service-config
-                  key: KAFKA_TOPIC
