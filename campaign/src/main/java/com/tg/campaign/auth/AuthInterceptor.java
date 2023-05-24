@@ -38,6 +38,15 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         SessionUserVo sessionUserVo = authService.getSession(session.getId());
+        if (sessionUserVo == null) {
+            if (auth != null) {
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "유효하지 않는 세션입니다.");
+                return false;
+            } else {
+                UserContext.CONTEXT.set(null);
+                return true;
+            }
+        }
         UserContext.CONTEXT.set(sessionUserVo);
         return true;
     }
