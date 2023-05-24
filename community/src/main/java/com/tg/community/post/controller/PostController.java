@@ -25,7 +25,6 @@ import java.util.List;
 @Tag(name = "COMMUNITY", description = "커뮤니티 API")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/community")
 public class PostController {
 
     private final PostService postService;
