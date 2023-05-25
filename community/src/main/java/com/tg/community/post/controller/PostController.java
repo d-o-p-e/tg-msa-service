@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -52,17 +53,9 @@ public class PostController {
     @Operation(summary = "게시물 등록", description = "새로운 게시글을 작성합니다.")
     @Auth
     @PostMapping(value = "/")
-    public ResponseEntity<Void> createPost(
-            @RequestPart MultipartFile image,
-            @RequestPart String content,
-            @RequestPart PostCategory category
-    ) {
+    public ResponseEntity<Void> createPost(@ModelAttribute CreatePostRequestDto createPostRequestDto) {
         SessionUserVo sessionUserVo = UserContext.getContext();
-        postService.create(sessionUserVo.getId(), CreatePostRequestDto.builder()
-                .image(image)
-                .category(category)
-                .content(content)
-                .build());
+        postService.create(sessionUserVo.getId(), createPostRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
