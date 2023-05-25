@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -36,7 +37,7 @@ public class CommentController {
     @Operation(summary = "댓글 작성", description = "댓글을 작성합니다.")
     @Auth
     @PostMapping
-    public ResponseEntity<Void> createComment(@PathVariable Long postId, CreateCommentRequestDto createCommentRequestDto) {
+    public ResponseEntity<Void> createComment(@PathVariable Long postId, @RequestBody CreateCommentRequestDto createCommentRequestDto) {
         SessionUserVo sessionUserVo = UserContext.getContext();
         commentService.create(sessionUserVo.getId(), postId, createCommentRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
