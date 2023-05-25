@@ -57,3 +57,6 @@ aws:
 server:
   servlet:
     contextPath: /api/community
+    session:
+      cookie:
+        max-age: 0
