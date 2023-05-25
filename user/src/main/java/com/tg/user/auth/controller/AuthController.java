@@ -29,7 +29,7 @@ public class AuthController {
     }
 
     @GetMapping("/oauth/kakao/test")
-    public ResponseEntity<Void> login(@RequestParam String code, HttpSession session) {
+    public ResponseEntity<Void> loginTest(@RequestParam String code, HttpSession session) {
         Long userId = userService.testLogin(code);
         authService.createSession(userId, session.getId());
         return new ResponseEntity<>(HttpStatus.OK);
