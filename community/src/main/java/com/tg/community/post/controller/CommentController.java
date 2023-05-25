@@ -30,14 +30,14 @@ public class CommentController {
     private final CommentService commentService;
 
     @Operation(summary = "댓글 조회", description = "댓글을 조회합니다.")
-    @GetMapping
+    @GetMapping("")
     public ResponseEntity<List<CommentResponseDto>> getComment(@PathVariable Long postId) {
         return ResponseEntity.ok().body(commentService.getCommentsList(postId));
     }
 
     @Operation(summary = "댓글 작성", description = "댓글을 작성합니다.")
     @Auth
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<Void> createComment(@PathVariable Long postId, @RequestBody CreateCommentRequestDto createCommentRequestDto) {
         SessionUserVo sessionUserVo = UserContext.getContext();
         commentService.create(sessionUserVo.getId(), postId, createCommentRequestDto);
