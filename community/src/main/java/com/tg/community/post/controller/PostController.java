@@ -4,6 +4,7 @@ import com.tg.community.auth.Auth;
 import com.tg.community.auth.UserContext;
 import com.tg.community.auth.domain.SessionUserVo;
 import com.tg.community.post.domain.FeedOption;
+import com.tg.community.post.domain.PostCategory;
 import com.tg.community.post.domain.PostService;
 import com.tg.community.post.domain.dto.CreatePostRequestDto;
 import com.tg.community.post.domain.dto.FeedResponseDto;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -48,10 +51,18 @@ public class PostController {
 
     @Operation(summary = "게시물 등록", description = "새로운 게시글을 작성합니다.")
     @Auth
-    @PostMapping("/")
-    public ResponseEntity<Void> createPost(@RequestBody CreatePostRequestDto createPostRequestDto) {
+    @PostMapping(value = "/", consumes = {"multipart/form-data"})
+    public ResponseEntity<Void> createPost(
+            @RequestPart MultipartFile image,
+            @RequestPart String content,
+            @RequestPart PostCategory category
+    ) {
         SessionUserVo sessionUserVo = UserContext.getContext();
-        postService.create(sessionUserVo.getId(), createPostRequestDto);
+        postService.create(sessionUserVo.getId(), CreatePostRequestDto.builder()
+                .image(image)
+                .category(category)
+                .content(content)
+                .build());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
