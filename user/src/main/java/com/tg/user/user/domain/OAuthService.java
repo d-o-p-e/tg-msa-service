@@ -4,6 +4,4 @@ import com.tg.user.user.domain.dto.KakaoUserInformation;
 
 public interface OAuthService {
     KakaoUserInformation requestUserInformation(String code);
-
-    KakaoUserInformation requestUserInformationTest(String code);
 }

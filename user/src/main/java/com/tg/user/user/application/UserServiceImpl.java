@@ -33,31 +33,24 @@ public class UserServiceImpl implements UserService {
         return user.getId();
     }
 
-    @Override
-    public Long testLogin(String code) {
-        KakaoUserInformation kakaoUserInformation = oAuthService.requestUserInformationTest(code);
-        User user = getOrCreateUser(kakaoUserInformation);
-        return user.getId();
-    }
-
     @Transactional
     public User getOrCreateUser(KakaoUserInformation kakaoUserInformation) {
         Optional<User> optionalUser = userRepository.findByProviderId(kakaoUserInformation.getProviderId());
         if (optionalUser.isPresent()) {
-            log.info("기존 유저 로그인: {}", optionalUser.get().getId());
+            log.info("기존 유저 로그인: {}, {}", optionalUser.get().getId(), kakaoUserInformation);
             return optionalUser.get();
         }
 
         User user = userRepository.save(User.builder()
                 .providerId(kakaoUserInformation.getProviderId())
-                .email(kakaoUserInformation.getEmail())
+                .email(kakaoUserInformation.getProperties().getEmail())
                 .nickname(kakaoUserInformation.getProperties().getNickname())
                 .profileImageUrl(kakaoUserInformation.getProperties().getProfileImage())
                 .build());
         if(user.getEmail() == null) {
             user.updateNickname("익명의 유저");
         }
-        log.info("신규 유저 가입: {}, {}, {}", user.getId(), user.getEmail(), user.getNickname());
+        log.info("신규 유저 가입: {}, {}", user.getId(), kakaoUserInformation);
         //TODO mapper 객체로 변환: Mapstruct
         userCreateKafkaProducerEvent.sendMessage(new UserCreateEventDto(user));
         return user;

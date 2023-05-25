@@ -7,11 +7,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@ToString
 @Getter
 public class KakaoUserInformation {
     @JsonProperty(value = "id")
     private String providerId;
-    private String email;
     private KakaoOAuthProperties properties;
 
     @Builder
@@ -20,6 +20,9 @@ public class KakaoUserInformation {
     @ToString
     @Getter
     public static class KakaoOAuthProperties {
+        @JsonProperty(value = "account_email")
+        private String email;
+        @JsonProperty(value = "profile_nickname")
         private String nickname;
         @JsonProperty(value = "profile_image")
         private String profileImage;

@@ -35,18 +35,4 @@ public class OAuthServiceImpl implements OAuthService {
                 "Bearer " + result.getAccessToken()
         );
     }
-
-    public KakaoUserInformation requestUserInformationTest(String code) {
-        KakaoAccessTokenResponseDto result = kakaoAccessTokenClient.call(
-                "application/x-www-form-urlencoded",
-                "authorization_code",
-                kakaoClientId,
-                "https://localhost:5173/oauth/kakao",
-                code
-        );
-        return kakaoInformationClient.call(
-                "application/x-www-form-urlencoded;charset=utf-8",
-                "Bearer " + result.getAccessToken()
-        );
-    }
 }
