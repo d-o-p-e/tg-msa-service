@@ -29,7 +29,8 @@ public class CommentController {
 
     private final CommentService commentService;
 
-    @GetMapping
+    @Operation(summary = "댓글 조회", description = "댓글을 조회합니다.")
+    @GetMapping("/")
     public ResponseEntity<List<CommentResponseDto>> getComment(@PathVariable Long postId) {
         return ResponseEntity.ok().body(commentService.getCommentsList(postId));
     }

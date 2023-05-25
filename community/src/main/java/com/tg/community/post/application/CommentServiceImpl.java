@@ -40,6 +40,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<CommentResponseDto> getCommentsList(Long postId) {
         List<Comment> commentList = commentRepository.findAllByPostIdFetch(postId);
         return commentList.stream().map(comment -> CommentResponseDto.builder()

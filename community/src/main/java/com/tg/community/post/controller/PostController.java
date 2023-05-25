@@ -4,7 +4,6 @@ import com.tg.community.auth.Auth;
 import com.tg.community.auth.UserContext;
 import com.tg.community.auth.domain.SessionUserVo;
 import com.tg.community.post.domain.FeedOption;
-import com.tg.community.post.domain.PostCategory;
 import com.tg.community.post.domain.PostService;
 import com.tg.community.post.domain.dto.CreatePostRequestDto;
 import com.tg.community.post.domain.dto.FeedResponseDto;
@@ -18,12 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
