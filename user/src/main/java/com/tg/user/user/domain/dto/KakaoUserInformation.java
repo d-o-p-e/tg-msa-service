@@ -13,6 +13,7 @@ public class KakaoUserInformation {
     @JsonProperty(value = "id")
     private String providerId;
     private KakaoOAuthProperties properties;
+    private KakaoOAuthAccountInfo kakao_account;
 
     @Builder
     @NoArgsConstructor
@@ -20,9 +21,6 @@ public class KakaoUserInformation {
     @ToString
     @Getter
     public static class KakaoOAuthProperties {
-        @JsonProperty(value = "account_email")
-        private String email;
-        @JsonProperty(value = "profile_nickname")
         private String nickname;
         @JsonProperty(value = "profile_image")
         private String profileImage;
@@ -30,6 +28,15 @@ public class KakaoUserInformation {
         private String thumbnailImage;
         @JsonProperty(value = "kakao_account")
         private String kakaoAccount;
+    }
+
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @ToString
+    @Getter
+    public static class KakaoOAuthAccountInfo {
+        private String email;
     }
 
 }

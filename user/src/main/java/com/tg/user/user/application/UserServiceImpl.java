@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.save(User.builder()
                 .providerId(kakaoUserInformation.getProviderId())
-                .email(kakaoUserInformation.getProperties().getEmail())
+                .email(kakaoUserInformation.getKakao_account().getEmail())
                 .nickname(kakaoUserInformation.getProperties().getNickname())
                 .profileImageUrl(kakaoUserInformation.getProperties().getProfileImage())
                 .build());
