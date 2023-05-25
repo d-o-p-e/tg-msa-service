@@ -26,6 +26,7 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
+    @Override
     public void create(Long userId, Long postId, CreateCommentRequestDto createCommentRequestDto) {
         User user = userRepository.getReferenceById(userId);
         Post post = postRepository.findById(postId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -38,6 +39,7 @@ public class CommentServiceImpl implements CommentService {
         );
     }
 
+    @Override
     public List<CommentResponseDto> getCommentsList(Long postId) {
         List<Comment> commentList = commentRepository.findAllByPostIdFetch(postId);
         return commentList.stream().map(comment -> CommentResponseDto.builder()
@@ -52,6 +54,7 @@ public class CommentServiceImpl implements CommentService {
         ).collect(Collectors.toList());
     }
 
+    @Override
     @Transactional
     public void delete(Long userId, Long commentId) {
         int result = commentRepository.deleteByIdAndUserId(commentId, userId);
