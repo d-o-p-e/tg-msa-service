@@ -77,4 +77,8 @@ public class User implements Serializable {
     public void addMileage() {
         this.mileage = new Mileage(this.mileage.inquiryAmounts() + 1);
     }
+
+    public void updateNickname(String nickname) {
+        this.nickname = nickname;
+    }
 }

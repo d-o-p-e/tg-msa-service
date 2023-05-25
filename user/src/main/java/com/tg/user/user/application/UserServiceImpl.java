@@ -43,8 +43,14 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.save(User.builder()
                 .providerId(kakaoUserInformation.getProviderId())
+                .email(kakaoUserInformation.getEmail())
+                .nickname(kakaoUserInformation.getProperties().getNickname())
+                .profileImageUrl(kakaoUserInformation.getProperties().getProfileImage())
                 .build());
-        log.info("신규 유저 가입: {}", user.getId());
+        if(user.getEmail() == null) {
+            user.updateNickname("익명의 유저");
+        }
+        log.info("신규 유저 가입: {}, {}, {}", user.getId(), user.getEmail(), user.getNickname());
         //TODO mapper 객체로 변환: Mapstruct
         userCreateKafkaProducerEvent.sendMessage(new UserCreateEventDto(user));
         return user;
