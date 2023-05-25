@@ -51,7 +51,7 @@ public class PostController {
 
     @Operation(summary = "게시물 등록", description = "새로운 게시글을 작성합니다.")
     @Auth
-    @PostMapping(value = "/", consumes = {"multipart/form-data"})
+    @PostMapping(value = "/")
     public ResponseEntity<Void> createPost(
             @RequestPart MultipartFile image,
             @RequestPart String content,
