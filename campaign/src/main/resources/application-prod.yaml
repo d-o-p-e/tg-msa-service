@@ -45,3 +45,6 @@ management:
 server:
   servlet:
     contextPath: /api/campaign
+    session:
+      cookie:
+        path: /
