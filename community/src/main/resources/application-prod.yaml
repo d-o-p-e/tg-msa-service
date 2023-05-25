@@ -57,7 +57,3 @@ aws:
 server:
   servlet:
     contextPath: /api/community
-    session:
-      cookie:
-        same-site: "lax"
-        path: /
