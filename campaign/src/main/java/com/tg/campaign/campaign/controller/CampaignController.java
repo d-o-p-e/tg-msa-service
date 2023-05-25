@@ -25,7 +25,7 @@ public class CampaignController {
     private final CampaignService campaignService;
 
     @Operation(summary = "캠페인 조회", description = "진행중인 캠페인을 목록을 조회합니다.")
-    @GetMapping("")
+    @GetMapping
     public ResponseEntity<List<CampaignResponseDto>> getCampaign() {
         return ResponseEntity.ok().body(campaignService.getCampaign());
     }
