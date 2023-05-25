@@ -86,6 +86,7 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    @Transactional
     public void unlike(Long userId, Long postId) {
         postLikeRepository.deleteByUserIdAndPostId(userId, postId);
     }

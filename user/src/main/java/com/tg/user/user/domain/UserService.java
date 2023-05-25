@@ -9,4 +9,6 @@ public interface UserService {
     User getOrCreateUser(KakaoUserInformation kakaoUserInformation);
 
     UserInformationResponseDto getUserInformation(Long targetUserId);
+
+    Long testLogin(String code);
 }

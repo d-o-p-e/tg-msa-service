@@ -33,6 +33,13 @@ public class UserServiceImpl implements UserService {
         return user.getId();
     }
 
+    @Override
+    public Long testLogin(String code) {
+        KakaoUserInformation kakaoUserInformation = oAuthService.requestUserInformationTest(code);
+        User user = getOrCreateUser(kakaoUserInformation);
+        return user.getId();
+    }
+
     @Transactional
     public User getOrCreateUser(KakaoUserInformation kakaoUserInformation) {
         Optional<User> optionalUser = userRepository.findByProviderId(kakaoUserInformation.getProviderId());
