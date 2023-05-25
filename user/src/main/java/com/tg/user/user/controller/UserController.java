@@ -22,8 +22,8 @@ public class UserController {
 
     @Operation(summary = "유저 정보 조회", description = "특정 유저의 정보를 조회합니다. (빈 값이면 현재 로그인한 유저의 정보를 조회합니다.)")
     @GetMapping("/{targetUserId}")
-    public ResponseEntity<UserInformationResponseDto> getUserInfo(@PathVariable(required = false) Long targetUserId) {
-        if (targetUserId == null) {
+    public ResponseEntity<UserInformationResponseDto> getUserInfo(@PathVariable Long targetUserId) {
+        if (targetUserId == 0) {
             targetUserId = UserContext.getContext().getId();
             if(targetUserId == null) return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
