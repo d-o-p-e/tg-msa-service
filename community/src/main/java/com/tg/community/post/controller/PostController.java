@@ -54,6 +54,15 @@ public class PostController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @Operation(summary = "게시물 등록 v2", description = "새로운 게시글을 작성합니다.")
+    @Auth
+    @PostMapping("/v2")
+    public ResponseEntity<Void> createPostV2(@ModelAttribute CreatePostRequestDto createPostRequestDto) {
+        SessionUserVo sessionUserVo = UserContext.getContext();
+        postService.create(sessionUserVo.getId(), createPostRequestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
     @Operation(summary = "게시글 삭제", description = "게시글을 삭제합니다.")
     @Auth
     @DeleteMapping("/{postId}")
