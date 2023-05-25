@@ -28,10 +28,6 @@ public class AuthInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
 
-        if (handlerMethod.getMethod().getName().equals("login")) {
-            return true;
-        }
-
         HttpSession session = request.getSession();
         if (session == null) { // 인증된 유저만.
             if (auth != null) {
