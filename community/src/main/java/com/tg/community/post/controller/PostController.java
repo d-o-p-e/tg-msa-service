@@ -44,11 +44,6 @@ public class PostController {
         FeedOption feedOption = new FeedOption(size, lastPostId, targetUserId);
         return ResponseEntity.ok().body(postService.getFeed(userId, feedOption));
     }
-    @GetMapping("/Test")
-    public void test() {
-        SessionUserVo sessionUserVo = UserContext.getContext();
-        System.out.println("sessionUserVo = " + sessionUserVo);
-    }
 
     @Operation(summary = "게시물 등록", description = "새로운 게시글을 작성합니다.")
     @Auth
