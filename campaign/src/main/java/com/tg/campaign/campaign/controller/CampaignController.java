@@ -5,11 +5,14 @@ import com.tg.campaign.auth.UserContext;
 import com.tg.campaign.auth.domain.SessionUserVo;
 import com.tg.campaign.campaign.domain.CampaignService;
 import com.tg.campaign.campaign.domain.dto.CampaignResponseDto;
+import com.tg.campaign.campaign.domain.dto.CreateCampaignRequestDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +31,13 @@ public class CampaignController {
     @GetMapping
     public ResponseEntity<List<CampaignResponseDto>> getCampaign() {
         return ResponseEntity.ok().body(campaignService.getCampaign());
+    }
+
+    @Operation(summary = "캠페인 생성", description = "캠페인을 생성합니다.")
+    @PostMapping
+    public ResponseEntity<Void> createPost(@ModelAttribute CreateCampaignRequestDto createCampaignRequestDto) {
+        campaignService.create(createCampaignRequestDto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @Operation(summary = "캠페인 응모", description = "캠페인에 응모합니다.")
