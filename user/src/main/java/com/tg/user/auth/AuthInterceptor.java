@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler;
@@ -29,29 +28,28 @@ public class AuthInterceptor implements HandlerInterceptor {
         HandlerMethod handlerMethod = (HandlerMethod) handler;
         Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
 
+        if (handlerMethod.getMethod().getName().equals("login")) {
+            return true;
+        }
+
         HttpSession session = request.getSession();
-        if (session == null) {
+        if (session == null) { // 인증된 유저만.
             if (auth != null) {
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "로그인이 필요합니다.");
                 return false;
-            } else {
+            } else { // 비로그인 유저 Null 처리
                 UserContext.CONTEXT.set(null);
                 return true;
             }
         }
 
         SessionUserVo sessionUserVo = authService.getSession(session.getId());
-        if (sessionUserVo == null) {
-            if (auth != null) {
-                response.sendError(HttpStatus.UNAUTHORIZED.value(), "유효하지 않는 세션입니다.");
-                return false;
-            } else {
-                UserContext.CONTEXT.set(null);
-                return true;
-            }
+        if (sessionUserVo == null) { // 세션 만료
+            response.sendError(HttpStatus.UNAUTHORIZED.value(), "유효하지 않는 세션입니다.");
+            return false;
         }
+        log.info("유저 로그인 정보: {}", sessionUserVo);
         UserContext.CONTEXT.set(sessionUserVo);
         return true;
     }
-
 }

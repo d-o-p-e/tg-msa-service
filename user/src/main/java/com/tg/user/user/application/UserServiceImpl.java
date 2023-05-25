@@ -9,6 +9,7 @@ import com.tg.user.user.domain.dto.UserCreateEventDto;
 import com.tg.user.user.domain.dto.UserInformationResponseDto;
 import com.tg.user.user.infra.UserCreateKafkaProducerEvent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -35,12 +37,14 @@ public class UserServiceImpl implements UserService {
     public User getOrCreateUser(KakaoUserInformation kakaoUserInformation) {
         Optional<User> optionalUser = userRepository.findByProviderId(kakaoUserInformation.getProviderId());
         if (optionalUser.isPresent()) {
+            log.info("기존 유저 로그인: {}", optionalUser.get().getId());
             return optionalUser.get();
         }
 
         User user = userRepository.save(User.builder()
                 .providerId(kakaoUserInformation.getProviderId())
                 .build());
+        log.info("신규 유저 가입: {}", user.getId());
         //TODO mapper 객체로 변환: Mapstruct
         userCreateKafkaProducerEvent.sendMessage(new UserCreateEventDto(user));
         return user;
