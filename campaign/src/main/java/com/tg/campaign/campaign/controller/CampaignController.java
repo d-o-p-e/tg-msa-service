@@ -28,13 +28,13 @@ public class CampaignController {
     private final CampaignService campaignService;
 
     @Operation(summary = "캠페인 조회", description = "진행중인 캠페인을 목록을 조회합니다.")
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<CampaignResponseDto>> getCampaign() {
         return ResponseEntity.ok().body(campaignService.getCampaign());
     }
 
     @Operation(summary = "캠페인 생성", description = "캠페인을 생성합니다.")
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<Void> createPost(@ModelAttribute CreateCampaignRequestDto createCampaignRequestDto) {
         campaignService.create(createCampaignRequestDto);
         return new ResponseEntity<>(HttpStatus.OK);
