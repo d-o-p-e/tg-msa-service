@@ -43,35 +43,11 @@ public class CampaignController {
 
     @Operation(summary = "단일 캠페인 응모", description = "단일 캠페인에 응모합니다.")
     @Auth
-    @GetMapping("/enter")
+    @PostMapping("/enter")
     public ResponseEntity<Void> enterOneCampaignTemp() {
         SessionUserVo sessionUserVo = UserContext.getContext();
         return campaignService.enterOneCampaign(sessionUserVo.getId());
     }
-
-    @GetMapping("/test1")
-    public String test() {
-        return "test";
-    }
-
-    @PostMapping("/test2")
-    public String test1() {
-        return "test";
-    }
-
-    @Auth
-    @GetMapping("/test2")
-    public String test2() {
-        return "test";
-    }
-
-    @Auth
-    @PostMapping("/test3")
-    public String test3() {
-        return "test";
-    }
-
-
 
 //    @Operation(summary = "캠페인 생성", description = "캠페인을 생성합니다.")
 //    @PostMapping("/")

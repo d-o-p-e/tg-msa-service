@@ -53,7 +53,7 @@ public class CampaignServiceImpl implements CampaignService {
     @Override
     @Transactional
     public ResponseEntity<Void> enterOneCampaign(Long userId) {
-        User user = userRepository.getReferenceById(userId);
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
         user.deductMileage();
         campaignEntrantRepository.save(new CampaignEntrant(null, user));
         entryCampaignProducerEvent.sendMessage(new EntryCampaignEventDto(user));
