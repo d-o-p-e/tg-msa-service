@@ -2,6 +2,7 @@ package com.tg.campaign.campaign.domain;
 
 import com.tg.campaign.campaign.domain.dto.CampaignResponseDto;
 import com.tg.campaign.campaign.domain.dto.CreateCampaignRequestDto;
+import com.tg.campaign.campaign.domain.dto.UserMileageResponseDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,4 +17,6 @@ public interface CampaignService {
     ResponseEntity<Void> enterOneCampaign(Long userId);
 
     void create(CreateCampaignRequestDto createCampaignRequestDto);
+
+    UserMileageResponseDto getMileage(Long id);
 }

@@ -10,6 +10,7 @@ import com.tg.campaign.campaign.domain.dto.CreateCampaignRequestDto;
 import com.tg.campaign.campaign.domain.dto.EntryCampaignEventDto;
 import com.tg.campaign.campaign.domain.EntryCampaignProducerEvent;
 import com.tg.campaign.campaign.domain.dto.CampaignResponseDto;
+import com.tg.campaign.campaign.domain.dto.UserMileageResponseDto;
 import com.tg.campaign.user.domain.User;
 import com.tg.campaign.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -69,5 +70,11 @@ public class CampaignServiceImpl implements CampaignService {
                         .imageUrl(fileName)
                         .build();
         campaignRepository.save(campaign);
+    }
+
+    @Override
+    public UserMileageResponseDto getMileage(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
+        return new UserMileageResponseDto(user.getMileage().inquiryAmounts());
     }
 }
