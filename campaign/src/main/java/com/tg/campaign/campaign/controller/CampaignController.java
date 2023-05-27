@@ -49,6 +49,30 @@ public class CampaignController {
         return campaignService.enterOneCampaign(sessionUserVo.getId());
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
+
+    @PostMapping("/test2")
+    public String test1() {
+        return "test";
+    }
+
+    @Auth
+    @GetMapping("/test")
+    public String test2() {
+        return "test";
+    }
+
+    @Auth
+    @PostMapping("/test2")
+    public String test3() {
+        return "test";
+    }
+
+
+
 //    @Operation(summary = "캠페인 생성", description = "캠페인을 생성합니다.")
 //    @PostMapping("/")
 //    public ResponseEntity<Void> createPost(@ModelAttribute CreateCampaignRequestDto createCampaignRequestDto) {
