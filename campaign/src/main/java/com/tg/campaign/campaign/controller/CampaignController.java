@@ -47,4 +47,12 @@ public class CampaignController {
         SessionUserVo sessionUserVo = UserContext.getContext();
         return campaignService.enterCampaign(sessionUserVo.getId(), campaignId);
     }
+
+    @Operation(summary = "단일 캠페인 응모", description = "단일 캠페인에 응모합니다.")
+    @Auth
+    @PostMapping("/")
+    public ResponseEntity<Void> enterOneCampaign() {
+        SessionUserVo sessionUserVo = UserContext.getContext();
+        return campaignService.enterOneCampaign(sessionUserVo.getId());
+    }
 }

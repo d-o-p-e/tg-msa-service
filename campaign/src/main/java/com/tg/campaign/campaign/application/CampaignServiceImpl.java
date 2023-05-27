@@ -52,6 +52,16 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     @Transactional
+    public ResponseEntity<Void> enterOneCampaign(Long userId) {
+        User user = userRepository.getReferenceById(userId);
+        user.deductMileage();
+        campaignEntrantRepository.save(new CampaignEntrant(null, user));
+        entryCampaignProducerEvent.sendMessage(new EntryCampaignEventDto(user));
+        return ResponseEntity.ok().build();
+    }
+
+    @Override
+    @Transactional
     public void create(CreateCampaignRequestDto createCampaignRequestDto) {
         String fileName = mediaService.uploadFile(createCampaignRequestDto.getImage(), s3ImageDirectory);
         Campaign campaign = Campaign.builder()
