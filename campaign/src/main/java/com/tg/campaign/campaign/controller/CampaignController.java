@@ -33,20 +33,20 @@ public class CampaignController {
         return ResponseEntity.ok().body(campaignService.getCampaign());
     }
 
-    @Operation(summary = "캠페인 생성", description = "캠페인을 생성합니다.")
-    @PostMapping("/")
-    public ResponseEntity<Void> createPost(@ModelAttribute CreateCampaignRequestDto createCampaignRequestDto) {
-        campaignService.create(createCampaignRequestDto);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @Operation(summary = "캠페인 응모", description = "캠페인에 응모합니다.")
-    @Auth
-    @PostMapping("/{campaignId}")
-    public ResponseEntity<Void> enterCampaign(@PathVariable Long campaignId) {
-        SessionUserVo sessionUserVo = UserContext.getContext();
-        return campaignService.enterCampaign(sessionUserVo.getId(), campaignId);
-    }
+//    @Operation(summary = "캠페인 생성", description = "캠페인을 생성합니다.")
+//    @PostMapping("/")
+//    public ResponseEntity<Void> createPost(@ModelAttribute CreateCampaignRequestDto createCampaignRequestDto) {
+//        campaignService.create(createCampaignRequestDto);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
+//
+//    @Operation(summary = "캠페인 응모", description = "캠페인에 응모합니다.")
+//    @Auth
+//    @PostMapping("/{campaignId}")
+//    public ResponseEntity<Void> enterCampaign(@PathVariable Long campaignId) {
+//        SessionUserVo sessionUserVo = UserContext.getContext();
+//        return campaignService.enterCampaign(sessionUserVo.getId(), campaignId);
+//    }
 
     @Operation(summary = "단일 캠페인 응모", description = "단일 캠페인에 응모합니다.")
     @Auth
