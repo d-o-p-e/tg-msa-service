@@ -49,7 +49,7 @@ public class CampaignController {
         return campaignService.enterOneCampaign(sessionUserVo.getId());
     }
 
-    @GetMapping("/test")
+    @GetMapping("/test1")
     public String test() {
         return "test";
     }
@@ -60,13 +60,13 @@ public class CampaignController {
     }
 
     @Auth
-    @GetMapping("/test")
+    @GetMapping("/test2")
     public String test2() {
         return "test";
     }
 
     @Auth
-    @PostMapping("/test2")
+    @PostMapping("/test3")
     public String test3() {
         return "test";
     }
