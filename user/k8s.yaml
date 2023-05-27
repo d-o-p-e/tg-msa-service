@@ -105,3 +105,8 @@ spec:
                 configMapKeyRef:
                   name: user-service-config
                   key: KAFKA_HOST
+            - name: MODULE_COMMUNITY_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: user-service-config
+                  key: MODULE_COMMUNITY_URL
