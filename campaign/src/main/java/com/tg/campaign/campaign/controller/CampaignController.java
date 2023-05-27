@@ -41,6 +41,14 @@ public class CampaignController {
         return campaignService.enterOneCampaign(sessionUserVo.getId());
     }
 
+    @Operation(summary = "단일 캠페인 응모", description = "단일 캠페인에 응모합니다.")
+    @Auth
+    @GetMapping("/enter")
+    public ResponseEntity<Void> enterOneCampaignTemp() {
+        SessionUserVo sessionUserVo = UserContext.getContext();
+        return campaignService.enterOneCampaign(sessionUserVo.getId());
+    }
+
 //    @Operation(summary = "캠페인 생성", description = "캠페인을 생성합니다.")
 //    @PostMapping("/")
 //    public ResponseEntity<Void> createPost(@ModelAttribute CreateCampaignRequestDto createCampaignRequestDto) {

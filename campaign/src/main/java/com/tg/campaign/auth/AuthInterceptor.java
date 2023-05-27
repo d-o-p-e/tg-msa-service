@@ -32,9 +32,11 @@ public class AuthInterceptor implements HandlerInterceptor {
         if (sessionId == null) { // 인증된 유저만.
             if (auth != null) {
                 response.sendError(HttpStatus.UNAUTHORIZED.value(), "로그인이 필요합니다.");
+                log.info("로그인이 필요합니다.");
                 return false;
             } else { // 비로그인 유저 Null 처리
                 UserContext.CONTEXT.set(null);
+                log.info("비로그인 유저입니다.");
                 return true;
             }
         }
@@ -42,6 +44,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         SessionUserVo sessionUserVo = authService.getSession(sessionId);
         if (sessionUserVo == null) { // 세션 만료
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "유효하지 않는 세션입니다.");
+            log.info("유효하지 않는 세션입니다.");
             return false;
         }
         log.info("유저 로그인 정보: {}", sessionUserVo);
