@@ -12,12 +12,12 @@ public class UserInformationResponseDto {
     private Long userId;
     private String nickname;
     private String profileImage;
-    private int workoutCount;
-    private int algorithmCount;
-    private int earlyBirdCount;
+    private Long workoutCount;
+    private Long algorithmCount;
+    private Long earlyBirdCount;
 
     @Builder
-    public UserInformationResponseDto(Long userId, String nickname, String profileImage, int workoutCount, int algorithmCount, int earlyBirdCount) {
+    public UserInformationResponseDto(Long userId, String nickname, String profileImage, Long workoutCount, Long algorithmCount, Long earlyBirdCount) {
         this.userId = userId;
         this.nickname = nickname;
         this.profileImage = profileImage;

@@ -2,6 +2,7 @@ package com.tg.community.post.domain;
 
 import com.tg.community.post.domain.dto.CreatePostRequestDto;
 import com.tg.community.post.domain.dto.FeedResponseDto;
+import com.tg.community.post.domain.dto.UserPostSummaryResponseDto;
 
 import java.util.List;
 
@@ -15,4 +16,6 @@ public interface PostService {
     void like(Long userId, Long postId);
 
     void unlike(Long userId, Long postId);
+
+    UserPostSummaryResponseDto getUserSummary(Long userId);
 }

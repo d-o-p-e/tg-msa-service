@@ -7,6 +7,7 @@ import com.tg.community.post.domain.FeedOption;
 import com.tg.community.post.domain.PostService;
 import com.tg.community.post.domain.dto.CreatePostRequestDto;
 import com.tg.community.post.domain.dto.FeedResponseDto;
+import com.tg.community.post.domain.dto.UserPostSummaryResponseDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -88,5 +89,10 @@ public class PostController {
         SessionUserVo sessionUserVo = UserContext.getContext();
         postService.unlike(sessionUserVo.getId(), postId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/user-post-summary/{userId}")
+    public ResponseEntity<UserPostSummaryResponseDto> userPostSummary(@PathVariable Long userId) {
+        return ResponseEntity.ok().body(postService.getUserSummary(userId));
     }
 }

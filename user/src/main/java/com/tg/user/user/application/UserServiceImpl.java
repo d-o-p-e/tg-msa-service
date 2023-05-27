@@ -7,7 +7,9 @@ import com.tg.user.user.domain.UserService;
 import com.tg.user.user.domain.dto.KakaoUserInformation;
 import com.tg.user.user.domain.dto.UserCreateEventDto;
 import com.tg.user.user.domain.dto.UserInformationResponseDto;
+import com.tg.user.user.domain.dto.UserPostSummaryResponseDto;
 import com.tg.user.user.infra.UserCreateKafkaProducerEvent;
+import com.tg.user.user.infra.UserPostSummaryFeignClient;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final OAuthService oAuthService;
     private final UserCreateKafkaProducerEvent userCreateKafkaProducerEvent;
+    private final UserPostSummaryFeignClient userPostSummaryFeignClient;
 
     @Override
     public Long login(String code) {
@@ -59,16 +62,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserInformationResponseDto getUserInformation(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-        int workoutCount = 0;
-        int algorithmCount = 0;
-        int earlyBirdCount = 0;
+        UserPostSummaryResponseDto userPostSummaryResponseDto = userPostSummaryFeignClient.call(userId);
         return UserInformationResponseDto.builder()
                 .userId(user.getId())
                 .nickname(user.getNickname())
                 .profileImage(user.getProfileImageUrl())
-                .workoutCount(workoutCount)
-                .algorithmCount(algorithmCount)
-                .earlyBirdCount(earlyBirdCount)
+                .workoutCount(userPostSummaryResponseDto.getWorkoutCount())
+                .algorithmCount(userPostSummaryResponseDto.getAlgorithmCount())
+                .earlyBirdCount(userPostSummaryResponseDto.getEarlyBirdCount())
                 .build();
     }
 }

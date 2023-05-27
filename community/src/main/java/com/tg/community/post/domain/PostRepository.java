@@ -15,4 +15,6 @@ public interface PostRepository {
     Post getReferenceById(Long postId);
 
     List<FeedResponseDto> getFeed(FeedOption feedOption);
+
+    List<Object[]> getUserSummary(Long userId);
 }

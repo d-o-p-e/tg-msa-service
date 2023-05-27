@@ -3,6 +3,7 @@ package com.tg.community.post.application;
 import com.tg.community.post.domain.FeedOption;
 import com.tg.community.post.domain.MediaService;
 import com.tg.community.post.domain.Post;
+import com.tg.community.post.domain.PostCategory;
 import com.tg.community.post.domain.PostLike;
 import com.tg.community.post.domain.PostLikeRepository;
 import com.tg.community.post.domain.PostRepository;
@@ -10,6 +11,7 @@ import com.tg.community.post.domain.PostService;
 import com.tg.community.post.domain.dto.CreatePostEventDto;
 import com.tg.community.post.domain.dto.CreatePostRequestDto;
 import com.tg.community.post.domain.dto.FeedResponseDto;
+import com.tg.community.post.domain.dto.UserPostSummaryResponseDto;
 import com.tg.community.post.infra.PostCreateKafkaProducerEvent;
 import com.tg.community.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -89,5 +91,29 @@ public class PostServiceImpl implements PostService {
     @Transactional
     public void unlike(Long userId, Long postId) {
         postLikeRepository.deleteByUserIdAndPostId(userId, postId);
+    }
+
+    @Override
+    public UserPostSummaryResponseDto getUserSummary(Long userId) {
+        List<Object[]> userSummary = postRepository.getUserSummary(userId);
+        Long algorithmCount = 0L;
+        Long earlyBirdCount = 0L;
+        Long workoutCount = 0L;
+        for (Object[] row : userSummary) {
+            PostCategory category = (PostCategory) row[0];
+            Long count = (Long) row[1];
+            if (category.equals(PostCategory.ALGORITHM)) {
+                algorithmCount = count;
+            } else if (category.equals(PostCategory.EARLY_BIRD)) {
+                earlyBirdCount = count;
+            } else if (category.equals(PostCategory.WORKOUT)) {
+                workoutCount = count;
+            }
+        }
+        return UserPostSummaryResponseDto.builder()
+                .algorithmCount(algorithmCount)
+                .earlyBirdCount(earlyBirdCount)
+                .workoutCount(workoutCount)
+                .build();
     }
 }
