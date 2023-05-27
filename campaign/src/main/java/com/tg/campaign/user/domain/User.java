@@ -52,7 +52,11 @@ public class User implements Serializable {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
-        this.mileage = new Mileage(0);
+        this.mileage = new Mileage(1);
+    }
+
+    public void addMileage() {
+        this.mileage = new Mileage(this.mileage.inquiryAmounts() + 1);
     }
 
     public void deductMileage() {

@@ -59,7 +59,7 @@ public class User implements Serializable {
         this.nickname = nickname;
         this.email = email;
         this.profileImageUrl = profileImageUrl;
-        this.mileage = new Mileage(0);
+        this.mileage = new Mileage(1);
     }
 
     public SessionUserVo toSessionUserVo() {
