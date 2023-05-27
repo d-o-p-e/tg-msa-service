@@ -24,7 +24,7 @@ public class KafkaConsumerConfig {
     private String servers;
 
     @Bean
-    public <T> ConsumerFactory<String, T> consumerFactory(Class<T> messageType) {
+    public <T> ConsumerFactory<String, T> userCreationConsumerFactory(Class<T> messageType) {
 
         JsonDeserializer<T> deserializer = new JsonDeserializer<>(messageType);
         deserializer.setRemoveTypeHeaders(false);
@@ -42,14 +42,29 @@ public class KafkaConsumerConfig {
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, UserCreateEventDto> createUserMessageListener() {
         ConcurrentKafkaListenerContainerFactory<String, UserCreateEventDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory(UserCreateEventDto.class));
+        factory.setConsumerFactory(userCreationConsumerFactory(UserCreateEventDto.class));
         return factory;
+    }
+
+    public <T> ConsumerFactory<String, T> postCreationConsumerFactory(Class<T> messageType) {
+
+        JsonDeserializer<T> deserializer = new JsonDeserializer<>(messageType);
+        deserializer.setRemoveTypeHeaders(false);
+        deserializer.addTrustedPackages("*");
+        deserializer.setUseTypeMapperForKey(true);
+
+        Map<String, Object> props = new HashMap<>();
+        props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, servers);
+        props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, deserializer);
+
+        return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), deserializer);
     }
 
     @Bean
     public ConcurrentKafkaListenerContainerFactory<String, CreatePostEventDto> createPostMessageListener() {
         ConcurrentKafkaListenerContainerFactory<String, CreatePostEventDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
-        factory.setConsumerFactory(consumerFactory(CreatePostEventDto.class));
+        factory.setConsumerFactory(postCreationConsumerFactory(CreatePostEventDto.class));
         return factory;
     }
 }

@@ -16,7 +16,7 @@ public class CreatePostKafkaEventListener {
 
     @Transactional
     @KafkaListener(topics = "campaign-entry", groupId = "user-campaign-1", containerFactory = "createPostMessageListener")
-    public void userCreateEventListener(EntryCampaignEventDto entryCampaignEventDto){
+    public void createPostEventListener(EntryCampaignEventDto entryCampaignEventDto){
         User user = userRepository.findById(entryCampaignEventDto.getUserId()).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
         user.addMileage();
     }
