@@ -4,6 +4,7 @@ import com.tg.community.user.domain.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.ConstraintMode;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.ForeignKey;
@@ -43,7 +44,7 @@ public class Post extends BaseTime {
 
     private String imageUrl;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private PostCategory category;
 
     @Builder

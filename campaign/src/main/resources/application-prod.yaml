@@ -1,3 +1,10 @@
+server:
+  servlet:
+    contextPath: /api/campaign
+    session:
+      cookie:
+        path: /
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -41,13 +48,6 @@ management:
     web:
       exposure:
         include: prometheus
-
-server:
-  servlet:
-    contextPath: /api/campaign
-    session:
-      cookie:
-        path: /
 
 aws:
   s3:

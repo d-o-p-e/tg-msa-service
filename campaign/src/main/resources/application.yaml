@@ -1,5 +1,20 @@
+module:
+  user:
+    url: localhost:8081
+  community:
+    url: localhost:8082
+  campaign:
+    url: localhost:8083
+  mailing:
+    url: localhost:8084
+
 server:
   port: 8083
+  servlet:
+    contextPath: /api/campaign
+    session:
+      cookie:
+        path: /
 
 spring:
   datasource:

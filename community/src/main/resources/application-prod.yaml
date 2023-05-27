@@ -1,3 +1,10 @@
+server:
+  servlet:
+    contextPath: /api/community
+    session:
+      cookie:
+        path: /
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -53,10 +60,3 @@ aws:
     directory:
       image: ${S3_DIRECTORY_IMAGE}
       profile: ${S3_DIRECTORY_PROFILE}
-
-server:
-  servlet:
-    contextPath: /api/community
-    session:
-      cookie:
-        path: /
