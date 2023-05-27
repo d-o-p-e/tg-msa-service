@@ -1,5 +1,6 @@
 package com.tg.campaign.config;
 
+import com.tg.campaign.campaign.domain.dto.CreatePostEventDto;
 import com.tg.campaign.user.domain.dto.UserCreateEventDto;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -42,6 +43,13 @@ public class KafkaConsumerConfig {
     public ConcurrentKafkaListenerContainerFactory<String, UserCreateEventDto> createUserMessageListener() {
         ConcurrentKafkaListenerContainerFactory<String, UserCreateEventDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory(UserCreateEventDto.class));
+        return factory;
+    }
+
+    @Bean
+    public ConcurrentKafkaListenerContainerFactory<String, CreatePostEventDto> createPostMessageListener() {
+        ConcurrentKafkaListenerContainerFactory<String, CreatePostEventDto> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        factory.setConsumerFactory(consumerFactory(CreatePostEventDto.class));
         return factory;
     }
 }
