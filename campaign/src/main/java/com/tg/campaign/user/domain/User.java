@@ -55,10 +55,12 @@ public class User implements Serializable {
         this.mileage = new Mileage(1);
     }
 
+    //마일리지 획득
     public void addMileage() {
         this.mileage = new Mileage(this.mileage.inquiryAmounts() + 1);
     }
 
+    // 마일리지 차감
     public void deductMileage() {
         mileage.verifyAtLeastBalance();
         this.mileage = new Mileage(this.mileage.inquiryAmounts() - 1);

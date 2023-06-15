@@ -26,6 +26,7 @@ public class CommentServiceImpl implements CommentService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
 
+    // 댓글 생성
     @Override
     public void create(Long userId, Long postId, CreateCommentRequestDto createCommentRequestDto) {
         User user = userRepository.getReferenceById(userId);
@@ -39,6 +40,7 @@ public class CommentServiceImpl implements CommentService {
         );
     }
 
+    //댓글조회
     @Override
     @Transactional(readOnly = true)
     public List<CommentResponseDto> getCommentsList(Long postId) {
@@ -55,6 +57,7 @@ public class CommentServiceImpl implements CommentService {
         ).collect(Collectors.toList());
     }
 
+    //삭제
     @Override
     @Transactional
     public void delete(Long userId, Long commentId) {

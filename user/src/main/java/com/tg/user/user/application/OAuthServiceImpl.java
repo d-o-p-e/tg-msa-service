@@ -22,6 +22,7 @@ public class OAuthServiceImpl implements OAuthService {
     @Value("${oauth.kakao.redirect-uri}")
     private String redirectUri;
 
+    // 카카오 토큰 발급
     public KakaoUserInformation requestUserInformation(String code) {
         KakaoAccessTokenResponseDto result = kakaoAccessTokenClient.call(
                 "application/x-www-form-urlencoded",

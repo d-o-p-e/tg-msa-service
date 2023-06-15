@@ -12,6 +12,7 @@ public class UserCreateKafkaEventListener {
 
     private final UserRepository userRepository;
 
+    //유저 생성 이벤트
     @KafkaListener(topics = "user-creation", groupId = "user-campaign-0", containerFactory = "createUserMessageListener")
     public void userCreateEventListener(UserCreateEventDto userCreateEventDto){
         userRepository.save(userCreateEventDto.toEntity());

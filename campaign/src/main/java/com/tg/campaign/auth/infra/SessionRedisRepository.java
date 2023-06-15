@@ -17,6 +17,7 @@ public class SessionRedisRepository implements SessionRepository {
     private final StringRedisTemplate redisTemplate;
     private final ObjectMapper objectMapper;
 
+    //레디스에서 세션 가져오기
     @Override
     public SessionUserVo getSession(String key) {
         ValueOperations<String, String> valueOps = redisTemplate.opsForValue();

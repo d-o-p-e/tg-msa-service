@@ -15,6 +15,8 @@ public class CreatePostKafkaEventListener {
 
     private final UserRepository userRepository;
 
+
+    // 포스트 생성 이밴트 리스너
     @Transactional
     @KafkaListener(topics = "post-creation", groupId = "user-campaign-1", containerFactory = "createPostMessageListener")
     public void createPostEventListener(CreatePostEventDto createPostEventDto){

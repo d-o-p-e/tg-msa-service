@@ -20,6 +20,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     private final AuthService authService;
 
+    // preHandle: 컨트롤러 실행 전
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if (ResourceHttpRequestHandler.class.isAssignableFrom(handler.getClass())) {

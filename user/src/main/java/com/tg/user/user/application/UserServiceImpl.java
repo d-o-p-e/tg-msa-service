@@ -29,6 +29,7 @@ public class UserServiceImpl implements UserService {
     private final UserCreateKafkaProducerEvent userCreateKafkaProducerEvent;
     private final UserPostSummaryFeignClient userPostSummaryFeignClient;
 
+    //로그인
     @Override
     public Long login(String code) {
         KakaoUserInformation kakaoUserInformation = oAuthService.requestUserInformation(code);
@@ -36,6 +37,7 @@ public class UserServiceImpl implements UserService {
         return user.getId();
     }
 
+    // 유저 생성
     @Transactional
     public User getOrCreateUser(KakaoUserInformation kakaoUserInformation) {
         Optional<User> optionalUser = userRepository.findByProviderId(kakaoUserInformation.getProviderId());
@@ -59,6 +61,7 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
+    // 유저 정보 조회
     @Override
     public UserInformationResponseDto getUserInformation(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

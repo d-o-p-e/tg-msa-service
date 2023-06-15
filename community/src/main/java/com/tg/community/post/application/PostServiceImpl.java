@@ -38,6 +38,7 @@ public class PostServiceImpl implements PostService {
     private final UserRepository userRepository;
     private final PostLikeRepository postLikeRepository;
 
+    //포스트생성
     @Transactional
     public void create(Long userId, CreatePostRequestDto createPostRequestDto) {
         String fileName = mediaService.uploadFile(createPostRequestDto.getImage(), s3ImageDirectory);
@@ -64,6 +65,7 @@ public class PostServiceImpl implements PostService {
         return feed;
     }
 
+    //삭제
     @Transactional
     public void delete(Long userId, Long targetPostId) {
         Post post = postRepository.findById(targetPostId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -75,6 +77,7 @@ public class PostServiceImpl implements PostService {
         mediaService.deleteFile(s3ImageDirectory + imageUrl);
     }
 
+    //좋아요
     public void like(Long userId, Long postId) {
         try {
             postLikeRepository.save(
@@ -88,11 +91,14 @@ public class PostServiceImpl implements PostService {
         }
     }
 
+    //좋아요취소
     @Transactional
     public void unlike(Long userId, Long postId) {
         postLikeRepository.deleteByUserIdAndPostId(userId, postId);
     }
 
+
+    // 유저별 포스트 요약
     @Override
     public UserPostSummaryResponseDto getUserSummary(Long userId) {
         List<Object[]> userSummary = postRepository.getUserSummary(userId);

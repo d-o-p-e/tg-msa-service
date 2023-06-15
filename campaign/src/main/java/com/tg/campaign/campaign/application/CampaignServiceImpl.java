@@ -34,11 +34,13 @@ public class CampaignServiceImpl implements CampaignService {
     @Value("${aws.s3.directory.image}")
     private String s3ImageDirectory;
 
+    // 캠페인 조회
     public List<CampaignResponseDto> getCampaign() {
         List<Campaign> campaignList = campaignRepository.findAll();
         return CampaignResponseDto.of(campaignList);
     }
 
+    //캠페인응모
     @Override
     @Transactional
     public ResponseEntity<Void> enterCampaign(Long userId, Long campaignId) {
@@ -51,6 +53,7 @@ public class CampaignServiceImpl implements CampaignService {
         return ResponseEntity.ok().build();
     }
 
+    //캠페인응모(1개)
     @Override
     @Transactional
     public ResponseEntity<Void> enterOneCampaign(Long userId) {
@@ -61,6 +64,7 @@ public class CampaignServiceImpl implements CampaignService {
         return ResponseEntity.ok().build();
     }
 
+    //캠페인생성
     @Override
     @Transactional
     public void create(CreateCampaignRequestDto createCampaignRequestDto) {
@@ -72,6 +76,7 @@ public class CampaignServiceImpl implements CampaignService {
         campaignRepository.save(campaign);
     }
 
+    //마일리지조회
     @Override
     public UserMileageResponseDto getMileage(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
